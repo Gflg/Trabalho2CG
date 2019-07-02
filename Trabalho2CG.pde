@@ -87,10 +87,10 @@ void draw() {
               break;
           default:
               background(255, 255, 255);
-              Vertice pontoA = new Vertice (Integer.parseInt(XpontoA), Integer.parseInt(YpontoA), Integer.parseInt(ZpontoA));
-              Vertice pontoB = new Vertice (Integer.parseInt(XpontoB), Integer.parseInt(YpontoB), Integer.parseInt(ZpontoB));
+              Vertice pontoA = new Vertice (Float.parseFloat(XpontoA), Float.parseFloat(YpontoA), Float.parseFloat(ZpontoA));
+              Vertice pontoB = new Vertice (Float.parseFloat(XpontoB), Float.parseFloat(YpontoB), Float.parseFloat(ZpontoB));
               double n[] = {pontoB.getX() - pontoA.getX(), pontoB.getY() - pontoA.getY(), pontoB.getZ() - pontoA.getZ()};
-              double teta = Integer.parseInt(anguloTeta);
+              double teta = Double.parseDouble(anguloTeta);
               TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(pontoA, pontoB, n, teta);
               telaRotacaoQuaternio.drawTela();
         }
