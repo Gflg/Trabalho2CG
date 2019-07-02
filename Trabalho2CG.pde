@@ -1,6 +1,5 @@
 import java.awt.Dimension;
 import java.awt.*;
-import static javax.swing.JOptionPane.*;
 
 int transicao;
 int cor;
@@ -11,13 +10,13 @@ int ultimoTempo;
 int pontuacao;
 int aux;
 int entradaUsuario = 0;
-String XpontoA="";
-String YpontoA="";
+float XpontoA, YpontoA;
 String ZpontoA="";
-String XpontoB="";
-String YpontoB="";
+float XpontoB, YpontoB;
 String ZpontoB="";
 String anguloTeta="";
+
+Vertice verticeA, verticeB;
 
 Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -34,33 +33,25 @@ void draw() {
   switch (entradaUsuario) {
     case 0:
       fill(0);
-      text ("Informe a Coordenada X do Ponto A (do eixo de rotação) e aperte enter para continuar: " + XpontoA, 133, 100);
+      text ("Clique na tela para definir o Ponto A (do eixo de rotação)", 133, 100);
       break;
     case 1:
       fill(0);
-      text ("Informe a Coordenada Y do Ponto A (do eixo de rotação) e aperte enter para continuar: " + YpontoA, 133, 150);
+      text ("Informe a Coordenada Z do Ponto A (do eixo de rotação) e aperte enter para continuar: " + ZpontoA, 133, 200);
       break;
     case 2:
       fill(0);
-      text ("Informe a Coordenada Z do Ponto A (do eixo de rotação) e aperte enter para continuar: " + ZpontoA, 133, 200);
+      text ("Clique na tela para definir o Ponto B (do eixo de rotação) e aperte enter para continuar: ", 133, 300);
       break;
     case 3:
       fill(0);
-      text ("Informe a Coordenada X do Ponto B (do eixo de rotação) e aperte enter para continuar: " + XpontoB, 133, 250);
+      text ("Informe a Coordenada Z do Ponto B (do eixo de rotação) e aperte enter para continuar: " + ZpontoB, 133, 400);
       break;
     case 4:
       fill(0);
-      text ("Informe a Coordenada Y do Ponto B (do eixo de rotação) e aperte enter para continuar: " + YpontoB, 133, 300);
+      text ("Informe o ângulo de rotação (teta) e aperte enter para continuar: " + anguloTeta, 133, 500);
       break;
     case 5:
-      fill(0);
-      text ("Informe a Coordenada Z do Ponto B (do eixo de rotação) e aperte enter para continuar: " + ZpontoB, 133, 350);
-      break;
-    case 6:
-      fill(0);
-      text ("Informe o ângulo de rotação (teta) e aperte enter para continuar: " + anguloTeta, 133, 400);
-      break;
-    case 7:
       textSize(32);
       text ("Ponto X: (" + XpontoA + ", " + YpontoA + ", " + ZpontoA + ")", 133, 600);
       text ("Ponto Y: (" + XpontoB + ", " + YpontoB + ", " + ZpontoB + ")", 133, 650);
@@ -75,54 +66,67 @@ void draw() {
       } else {
         switch (fase) {
           case 0:
-              Fase3D fase3d = new Fase3D();
-              fase3d.drawTela();
-              fill(0, 0, 0);
-              textSize(40);
-              text("Clique para iniciar!", 450, 800);
-              if (mousePressed) {
-                transicao = 1;
-                cor = 0;
-              }
-              break;
+            Fase3D fase3d = new Fase3D();
+            fase3d.drawTela();
+            fill(0, 0, 0);
+            textSize(40);
+            text("Clique para iniciar!", 450, 800);
+            if (mousePressed) {
+              transicao = 1;
+              cor = 0;
+            }
+            break;
           default:
-              background(255, 255, 255);
-              Vertice pontoA = new Vertice (Float.parseFloat(XpontoA), Float.parseFloat(YpontoA), Float.parseFloat(ZpontoA));
-              Vertice pontoB = new Vertice (Float.parseFloat(XpontoB), Float.parseFloat(YpontoB), Float.parseFloat(ZpontoB));
-              double n[] = {pontoB.getX() - pontoA.getX(), pontoB.getY() - pontoA.getY(), pontoB.getZ() - pontoA.getZ()};
-              double teta = Double.parseDouble(anguloTeta);
-              TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(pontoA, pontoB, n, teta);
-              telaRotacaoQuaternio.drawTela();
+            background(255, 255, 255);
+            double n[] = {verticeB.getX() - verticeA.getX(), verticeB.getY() - verticeA.getY(), verticeB.getZ() - verticeA.getZ()};
+            double teta = Double.parseDouble(anguloTeta);
+            TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, n, teta);
+            telaRotacaoQuaternio.drawTela();
         }
       }
       break;
-}
+  }
 }
 
 void keyPressed() { 
-  if (key == ENTER || key == RETURN) {
-    entradaUsuario++;
-  } else {
-    if(entradaUsuario == 0){
-      XpontoA = XpontoA + key;
-    }
-    if(entradaUsuario == 1){
-      YpontoA = YpontoA + key;
-    }
-    if(entradaUsuario == 2){
-      ZpontoA = ZpontoA + key;
-    }
-    if(entradaUsuario == 3){
-      XpontoB = XpontoB + key;
-    }
-    if(entradaUsuario == 4){
-      YpontoB = YpontoB + key;
-    }
-    if(entradaUsuario == 5){
-      ZpontoB = ZpontoB + key;
-    }
-    if(entradaUsuario == 6){
-      anguloTeta = anguloTeta + key;
-    }
+  switch(entradaUsuario) {
+    case 1:
+      if ((key == ENTER || key == RETURN) && ZpontoA.length() > 0) {
+        this.verticeA = new Vertice(this.XpontoA, this.YpontoA, Float.parseFloat(ZpontoA));
+        entradaUsuario++;
+      } else {
+        ZpontoA = ZpontoA + key;
+      }
+      break;
+    case 3:
+      if ((key == ENTER || key == RETURN) && ZpontoB.length() > 0) {
+        this.verticeB = new Vertice(this.XpontoB, this.YpontoB, Float.parseFloat(ZpontoB));
+        entradaUsuario++;
+      } else {
+        ZpontoB = ZpontoB + key;
+      }
+      break;
+    case 4:
+      if ((key == ENTER || key == RETURN) && anguloTeta.length() > 0) {
+        entradaUsuario++;
+      } else {
+        anguloTeta = anguloTeta + key;
+      }
+      break;
+  }
+}
+
+void mousePressed() {
+  switch(entradaUsuario) {
+    case 0:
+      this.XpontoA = mouseX;
+      this.YpontoA = mouseY;
+      entradaUsuario++;
+      break;
+    case 2:
+      this.XpontoB = mouseX;
+      this.YpontoB = mouseY;
+      entradaUsuario++;
+      break;
   }
 }
