@@ -56,7 +56,8 @@ public class TelaRotacaoQuaternio {
   }
 
   double produtoInterno(double vetor1[], double vetor2[]){
-    return moduloVetor(vetor1) * moduloVetor(vetor2) * cosseno(anguloEntreVetores(vetor1, vetor2));
+    //return moduloVetor(vetor1) * moduloVetor(vetor2) * cosseno(anguloEntreVetores(vetor1, vetor2));
+    return vetor1[0] * vetor2[0] + vetor1[1] * vetor2[1] + vetor1[2] * vetor2[2];
   }
 
   double[] produtoVetorial(double vetor1[], double vetor2[]){
