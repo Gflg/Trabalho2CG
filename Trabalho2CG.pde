@@ -15,6 +15,7 @@ String ZpontoA="";
 float XpontoB, YpontoB;
 String ZpontoB="";
 String anguloTeta="";
+boolean firstLoop = true;
 
 Vertice verticeA, verticeB;
 
@@ -78,11 +79,10 @@ void draw() {
             break;
           default:
             background(255, 255, 255);
-            //double n[] = {verticeB.getX() - verticeA.getX(), verticeB.getY() - verticeA.getY(), verticeB.getZ() - verticeA.getZ()};
-            double n[] = {1,0,0};
             double teta = Double.parseDouble(anguloTeta);
-            TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, n, teta);
+            TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, teta, firstLoop);
             telaRotacaoQuaternio.drawTela();
+            this.firstLoop = false;
         }
       }
       break;

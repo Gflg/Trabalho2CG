@@ -3,12 +3,21 @@ public class TelaRotacaoQuaternio {
   Vertice pontoA, pontoB;
 
   double n[], teta;
+  
+  boolean firstLoop;
 
-  public TelaRotacaoQuaternio(Vertice pontoA, Vertice pontoB, double n[], double teta) {
+  public TelaRotacaoQuaternio(Vertice pontoA, Vertice pontoB, double teta, boolean firstLoop) {
     this.pontoA = pontoA;
     this.pontoB = pontoB;
-    this.n = n;
+    this.n = this.normalizaVetorEntreOsPontos();
     this.teta = teta;
+    this.firstLoop = firstLoop;
+  }
+  
+  double[] normalizaVetorEntreOsPontos() {
+    double vetorEntreOsPontos[] = {this.pontoB.getX() - this.pontoA.getX(), this.pontoB.getY() - this.pontoA.getY(), this.pontoB.getZ() - this.pontoA.getZ()};
+    double moduloDoVetor = this.moduloVetor(vetorEntreOsPontos);
+    return this.multiplicaVetorPorEscalar(vetorEntreOsPontos, 1/moduloDoVetor);
   }
 
   double seno(double angulo){
@@ -112,40 +121,31 @@ public class TelaRotacaoQuaternio {
 
     stroke(163, 16, 163);
 
-    float[][] translacao = new float[3][3];
-
     //Criando os vértices do Decágono 1
-    Vertice pontaDoDecagono = new Vertice(0, 0, 0);
-
-    translacao[0][0] = 620;
-    translacao[0][1] = 0;
-    translacao[1][0] = 425;
-    translacao[1][1] = 0;
-    translacao[2][0] = 0;
-    translacao[2][1] = 0;
+    Vertice pontaDoDecagono = new Vertice((this.pontoB.getX() + this.pontoA.getX())/2, (this.pontoB.getY() + this.pontoA.getY())/2, (this.pontoB.getZ() + this.pontoA.getZ())/2);
 
     Decagono3D decagono = new Decagono3D(pontaDoDecagono);
 
     stroke(163, 16, 163);
 
     for (int i = 0; i < decagono.vertices.length; i++){
-      decagono.moveVertice(i, translacao);
-    }
-
-    for (int i = 0; i < decagono.vertices.length; i++){
-      System.out.println("--- Coordenadas do Ponto ANTES da ROTAÇÃO ---");
-      System.out.println(decagono.vertices[i].getX());
-      System.out.println(decagono.vertices[i].getY());
-      System.out.println(decagono.vertices[i].getZ());
+      if (this.firstLoop) {
+        System.out.println("--- Coordenadas do Ponto ANTES da ROTAÇÃO ---");
+        System.out.println(decagono.vertices[i].getX());
+        System.out.println(decagono.vertices[i].getY());
+        System.out.println(decagono.vertices[i].getZ());
+      }
 
       rotacionarPorQuaternio(decagono.vertices[i], n, teta);
 
-      System.out.println("--- Coordenadas do Ponto APÓS a ROTAÇÃO ---");
-      System.out.println(decagono.vertices[i].getX());
-      System.out.println(decagono.vertices[i].getY());
-      System.out.println(decagono.vertices[i].getZ());
+      if (this.firstLoop) {
+        System.out.println("--- Coordenadas do Ponto APÓS a ROTAÇÃO ---");
+        System.out.println(decagono.vertices[i].getX());
+        System.out.println(decagono.vertices[i].getY());
+        System.out.println(decagono.vertices[i].getZ());
+      }
     }
-
+    
     decagono.drawFigura();
 
     fill(0, 0, 0);
