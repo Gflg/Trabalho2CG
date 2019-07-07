@@ -17,6 +17,10 @@ String ZpontoB="";
 String anguloTeta="";
 boolean firstLoop = true;
 
+double teta, anguloAnimado, incrementoAnimacao;
+
+int tempoInicial, contadorTempo, contadorAnimacao = 50;
+
 Vertice verticeA, verticeB;
 
 Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -27,6 +31,7 @@ void settings() {
 
 void setup() {
   cor = transicao = fase =  acertos = erros = ultimoTempo = pontuacao = 0;
+  tempoInicial = millis();
   background(255);
 }
 
@@ -75,14 +80,28 @@ void draw() {
             if (mousePressed) {
               transicao = 1;
               cor = 0;
+              teta = Double.parseDouble(anguloTeta);
+              anguloAnimado = 0;
+              incrementoAnimacao = teta / contadorAnimacao;
             }
             break;
           default:
-            background(255, 255, 255);
-            double teta = Double.parseDouble(anguloTeta);
-            TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, teta, firstLoop);
+            
+            clear();//Limpa a tela antes de desenhar
+            background(255,255,255); //cor de fundo
+            
+            TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, anguloAnimado, firstLoop);
             telaRotacaoQuaternio.drawTela();
-            this.firstLoop = false;
+            
+            if (anguloAnimado + incrementoAnimacao < teta) {
+              anguloAnimado += incrementoAnimacao;
+              while(millis() - tempoInicial < 50); // Espera 50ms antes de redesenhar
+              tempoInicial = millis();
+            }
+            else {
+              anguloAnimado = teta;
+              this.firstLoop = false; // previne lotar o terminal com prints
+            }
         }
       }
       break;

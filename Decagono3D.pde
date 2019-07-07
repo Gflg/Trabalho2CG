@@ -3,25 +3,25 @@ public class Decagono3D extends FiguraGeometrica {
   public Decagono3D(Vertice pontaDecagono){
     super(3, 20);
     this.vertices[0] = new Vertice(pontaDecagono); //duas faces
-    this.vertices[1] = new Vertice(pontaDecagono.getX() - 10, pontaDecagono.getY() + 7.5, pontaDecagono.getZ()); //face esquerda
-    this.vertices[2] = new Vertice(pontaDecagono.getX() + 10, pontaDecagono.getY() + 7.5, pontaDecagono.getZ()); //face direita
-    this.vertices[3] = new Vertice(pontaDecagono.getX() - 15, pontaDecagono.getY() + 15, pontaDecagono.getZ()); //face esquerda
-    this.vertices[4] = new Vertice(pontaDecagono.getX() + 15, pontaDecagono.getY() + 15, pontaDecagono.getZ()); //face direita
-    this.vertices[5] = new Vertice(pontaDecagono.getX() - 15, pontaDecagono.getY() + 22.5, pontaDecagono.getZ()); //face esquerda
-    this.vertices[6] = new Vertice(pontaDecagono.getX() + 15, pontaDecagono.getY() + 22.5, pontaDecagono.getZ()); //face direita
-    this.vertices[7] = new Vertice(pontaDecagono.getX() - 10, pontaDecagono.getY() + 30, pontaDecagono.getZ()); //face esquerda
-    this.vertices[8] = new Vertice(pontaDecagono.getX() + 10, pontaDecagono.getY() + 30, pontaDecagono.getZ()); //face direita
-    this.vertices[9] = new Vertice(pontaDecagono.getX(), pontaDecagono.getY() + 32.5, pontaDecagono.getZ()); //duas faces
+    this.vertices[1] = new Vertice(pontaDecagono.getX() - 20, pontaDecagono.getY() + 15, pontaDecagono.getZ()); //face esquerda
+    this.vertices[2] = new Vertice(pontaDecagono.getX() + 20, pontaDecagono.getY() + 15, pontaDecagono.getZ()); //face direita
+    this.vertices[3] = new Vertice(pontaDecagono.getX() - 30, pontaDecagono.getY() + 30, pontaDecagono.getZ()); //face esquerda
+    this.vertices[4] = new Vertice(pontaDecagono.getX() + 30, pontaDecagono.getY() + 30, pontaDecagono.getZ()); //face direita
+    this.vertices[5] = new Vertice(pontaDecagono.getX() - 30, pontaDecagono.getY() + 45, pontaDecagono.getZ()); //face esquerda
+    this.vertices[6] = new Vertice(pontaDecagono.getX() + 30, pontaDecagono.getY() + 45, pontaDecagono.getZ()); //face direita
+    this.vertices[7] = new Vertice(pontaDecagono.getX() - 20, pontaDecagono.getY() + 60, pontaDecagono.getZ()); //face esquerda
+    this.vertices[8] = new Vertice(pontaDecagono.getX() + 20, pontaDecagono.getY() + 60, pontaDecagono.getZ()); //face direita
+    this.vertices[9] = new Vertice(pontaDecagono.getX(), pontaDecagono.getY() + 65, pontaDecagono.getZ()); //duas faces
     this.vertices[10] = new Vertice(pontaDecagono.getX(), pontaDecagono.getY(), pontaDecagono.getZ()+30);
-    this.vertices[11] = new Vertice(pontaDecagono.getX() - 10, pontaDecagono.getY() + 7.5, pontaDecagono.getZ()+30);
-    this.vertices[12] = new Vertice(pontaDecagono.getX() + 10, pontaDecagono.getY() + 7.5, pontaDecagono.getZ()+30);
-    this.vertices[13] = new Vertice(pontaDecagono.getX() - 15, pontaDecagono.getY() + 15, pontaDecagono.getZ()+30);
-    this.vertices[14] = new Vertice(pontaDecagono.getX() + 15, pontaDecagono.getY() + 15, pontaDecagono.getZ()+30);
-    this.vertices[15] = new Vertice(pontaDecagono.getX() - 15, pontaDecagono.getY() + 22.5, pontaDecagono.getZ()+30);
-    this.vertices[16] = new Vertice(pontaDecagono.getX() + 15, pontaDecagono.getY() + 22.5, pontaDecagono.getZ()+30);
-    this.vertices[17] = new Vertice(pontaDecagono.getX() - 10, pontaDecagono.getY() + 30, pontaDecagono.getZ()+30);
-    this.vertices[18] = new Vertice(pontaDecagono.getX() + 10, pontaDecagono.getY() + 30, pontaDecagono.getZ()+30);
-    this.vertices[19] = new Vertice(pontaDecagono.getX(), pontaDecagono.getY() + 32.5, pontaDecagono.getZ()+30);
+    this.vertices[11] = new Vertice(pontaDecagono.getX() - 20, pontaDecagono.getY() + 15, pontaDecagono.getZ()+30);
+    this.vertices[12] = new Vertice(pontaDecagono.getX() + 20, pontaDecagono.getY() + 15, pontaDecagono.getZ()+30);
+    this.vertices[13] = new Vertice(pontaDecagono.getX() - 30, pontaDecagono.getY() + 30, pontaDecagono.getZ()+30);
+    this.vertices[14] = new Vertice(pontaDecagono.getX() + 30, pontaDecagono.getY() + 30, pontaDecagono.getZ()+30);
+    this.vertices[15] = new Vertice(pontaDecagono.getX() - 30, pontaDecagono.getY() + 45, pontaDecagono.getZ()+30);
+    this.vertices[16] = new Vertice(pontaDecagono.getX() + 30, pontaDecagono.getY() + 45, pontaDecagono.getZ()+30);
+    this.vertices[17] = new Vertice(pontaDecagono.getX() - 20, pontaDecagono.getY() + 60, pontaDecagono.getZ()+30);
+    this.vertices[18] = new Vertice(pontaDecagono.getX() + 20, pontaDecagono.getY() + 60, pontaDecagono.getZ()+30);
+    this.vertices[19] = new Vertice(pontaDecagono.getX(), pontaDecagono.getY() + 65, pontaDecagono.getZ()+30);
     Aresta[][] arestas = new Aresta[4][10];
     this.faces = new Face[12];
 
