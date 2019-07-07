@@ -93,7 +93,7 @@ void draw() {
             TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, anguloAnimado, firstLoop);
             telaRotacaoQuaternio.drawTela();
             
-            if (anguloAnimado + incrementoAnimacao < teta) {
+            if (Math.abs(anguloAnimado + incrementoAnimacao) < Math.abs(teta)) {
               anguloAnimado += incrementoAnimacao;
               while(millis() - tempoInicial < 50); // Espera 50ms antes de redesenhar
               tempoInicial = millis();
