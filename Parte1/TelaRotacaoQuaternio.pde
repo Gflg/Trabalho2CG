@@ -1,19 +1,26 @@
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class TelaRotacaoQuaternio {
-  
+
   Vertice pontoA, pontoB;
 
   double n[], teta;
-  
+
   boolean firstLoop;
 
-  public TelaRotacaoQuaternio(Vertice pontoA, Vertice pontoB, double teta, boolean firstLoop) {
+  float anguloAtual = 0;
+
+  public TelaRotacaoQuaternio(Vertice pontoA, Vertice pontoB, double teta, boolean firstLoop, float anguloAtual) {
     this.pontoA = pontoA;
     this.pontoB = pontoB;
     this.n = this.normalizaVetorEntreOsPontos();
     this.teta = teta;
     this.firstLoop = firstLoop;
+    this.anguloAtual = anguloAtual;
   }
-  
+
   double[] normalizaVetorEntreOsPontos() {
     double vetorEntreOsPontos[] = {this.pontoB.getX() - this.pontoA.getX(), this.pontoB.getY() - this.pontoA.getY(), this.pontoB.getZ() - this.pontoA.getZ()};
     double moduloDoVetor = this.moduloVetor(vetorEntreOsPontos);
@@ -112,11 +119,13 @@ public class TelaRotacaoQuaternio {
     ponto.setX((float) vetorPontoRotacionado[0]);
     ponto.setY((float) vetorPontoRotacionado[1]);
     ponto.setZ((float) vetorPontoRotacionado[2]);
+
   }
 
   public void drawTela() {
 
     Aresta eixoRotacao = new Aresta(pontoA, pontoB);
+
     eixoRotacao.drawAresta();
 
     stroke(163, 16, 163);
@@ -129,6 +138,7 @@ public class TelaRotacaoQuaternio {
     stroke(163, 16, 163);
 
     for (int i = 0; i < decagono.vertices.length; i++){
+
       if (this.firstLoop) {
         System.out.println("--- Coordenadas do Ponto ANTES da ROTAÇÃO ---");
         System.out.println(decagono.vertices[i].getX());
@@ -136,7 +146,7 @@ public class TelaRotacaoQuaternio {
         System.out.println(decagono.vertices[i].getZ());
       }
 
-      rotacionarPorQuaternio(decagono.vertices[i], n, teta);
+      rotacionarPorQuaternio(decagono.vertices[i], n, anguloAtual);
 
       if (this.firstLoop) {
         System.out.println("--- Coordenadas do Ponto APÓS a ROTAÇÃO ---");
@@ -144,12 +154,13 @@ public class TelaRotacaoQuaternio {
         System.out.println(decagono.vertices[i].getY());
         System.out.println(decagono.vertices[i].getZ());
       }
+
     }
-    
+
     decagono.drawFigura();
 
     fill(0, 0, 0);
-    
+
   }
 
 }

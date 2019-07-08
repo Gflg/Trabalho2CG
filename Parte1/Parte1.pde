@@ -16,10 +16,9 @@ float XpontoB, YpontoB;
 String ZpontoB="";
 String anguloTeta="";
 boolean firstLoop = true;
-
-double teta, anguloAnimado, incrementoAnimacao;
-
-int tempoInicial, contadorTempo, contadorAnimacao = 50;
+long lastTime = 0;
+float anguloAtual = 0;
+int passoAtual = 0;
 
 Vertice verticeA, verticeB;
 
@@ -31,8 +30,8 @@ void settings() {
 
 void setup() {
   cor = transicao = fase =  acertos = erros = ultimoTempo = pontuacao = 0;
-  tempoInicial = millis();
   background(255);
+  lastTime = millis();
 }
 
 void draw() {
@@ -54,6 +53,8 @@ void draw() {
       text ("Informe a Coordenada Z do Ponto B (do eixo de rotação) e aperte enter para continuar: " + ZpontoB, 133, 400);
       break;
     case 4:
+      Aresta eixoRotacao = new Aresta(verticeA, verticeB);
+      eixoRotacao.drawAresta();
       fill(0);
       text ("Informe o ângulo de rotação (teta) e aperte enter para continuar: " + anguloTeta, 133, 500);
       break;
@@ -80,28 +81,26 @@ void draw() {
             if (mousePressed) {
               transicao = 1;
               cor = 0;
-              teta = Double.parseDouble(anguloTeta);
-              anguloAnimado = 0;
-              incrementoAnimacao = teta / contadorAnimacao;
             }
             break;
-          default:
-            
-            clear();//Limpa a tela antes de desenhar
-            background(255,255,255); //cor de fundo
-            
-            TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, anguloAnimado, firstLoop);
+          case 1:
+            background(255, 255, 255);
+            double teta = Double.parseDouble(anguloTeta);
+            int totalPassos = 50;
+            float anguloTetaDividido = (float) teta / totalPassos;
+            TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, teta, firstLoop, anguloAtual);
             telaRotacaoQuaternio.drawTela();
-            
-            if (Math.abs(anguloAnimado + incrementoAnimacao) < Math.abs(teta)) {
-              anguloAnimado += incrementoAnimacao;
-              while(millis() - tempoInicial < 50); // Espera 50ms antes de redesenhar
-              tempoInicial = millis();
+            this.firstLoop = false;
+            text ("Ângulo de Rotação: " + anguloAtual + "º", 133, 700);
+            text ("Passo: " + passoAtual, 133, 750);
+            if (millis() - lastTime > 60) { //Atualizando Rotação a cada 60 milisegundos
+              if(anguloAtual < teta) {
+                anguloAtual += anguloTetaDividido;
+                passoAtual++;
+                lastTime = millis();
+              }
             }
-            else {
-              anguloAnimado = teta;
-              this.firstLoop = false; // previne lotar o terminal com prints
-            }
+            break;
         }
       }
       break;
