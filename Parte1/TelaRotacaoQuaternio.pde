@@ -140,10 +140,10 @@ public class TelaRotacaoQuaternio {
     float taxaX1, taxaX2, x1, x2, altura;
     // Faces frente e trás
     if(face == 0 || face == 1){
-      taxaX1 = 0.2;
-      taxaX2 = -1.4;
-      x1 = decagono1.faces[face].arestas[0].vertices[0].getX()-6.5; //Esse -6.5 representa o ponto inicial no eixo x logo depois da aresta desenhada. 
-      x2 = decagono1.faces[face].arestas[1].vertices[1].getX()-5.5; //Esse -5.5 representa o ponto inicial no eixo x logo depois da aresta desenhada.
+      taxaX1 = 1.2;
+      taxaX2 = -1.2;
+      x1 = decagono1.vertices[1].getX(); //Esse -6.5 representa o ponto inicial no eixo x logo depois da aresta desenhada. 
+      x2 = decagono1.vertices[2].getX(); //Esse -5.5 representa o ponto inicial no eixo x logo depois da aresta desenhada.
       altura = decagono1.faces[face].arestas[1].vertices[1].getY();
       
       while(x1 < x2){
@@ -155,15 +155,13 @@ public class TelaRotacaoQuaternio {
         altura-=0.9;
       }
       
-      if (face == 0)
-        x1 = decagono1.faces[face].arestas[2].vertices[1].getX()+13;
-      else
-        x1 = decagono1.faces[face].arestas[2].vertices[1].getX()+15;
+      
+      x1 = decagono1.vertices[3].getX();
         
-      x2 = decagono1.faces[face].arestas[3].vertices[1].getX()-6;
+      x2 = decagono1.vertices[4].getX();
       altura = decagono1.faces[face].arestas[3].vertices[1].getY();
-      taxaX1 = -0.1;
-      taxaX2 = -1;
+      taxaX1 = 0.6;
+      taxaX2 = -0.55;
       
       //Região formada pelos vértices 1, 2, 3 e 4, que forma um trapézio.
       //Aqui o ponto de parada é a altura porque as coordenadas x das arestas esquerda e direita nunca vão se encontrar nessa região.
@@ -174,15 +172,12 @@ public class TelaRotacaoQuaternio {
         altura-=0.9;
       }
       
-      if (face == 0)
-        x1 = decagono1.faces[face].arestas[4].vertices[1].getX()+17;
-      else
-        x1 = decagono1.faces[face].arestas[4].vertices[1].getX()+19;
+      x1 = decagono1.vertices[5].getX();
         
-      x2 = decagono1.faces[face].arestas[5].vertices[1].getX()-2.5;
+      x2 = decagono1.vertices[6].getX();
       altura = decagono1.faces[face].arestas[5].vertices[1].getY(); 
-      taxaX1 = -0.6;
-      taxaX2 = -0.6;
+      taxaX1 = 0;
+      taxaX2 = 0;
       
       //Região formada pelos vértices 3, 4, 5 e 6, que forma um quadrilátero que possui as variações iguais no eixo x, como se fosse um retângulo em itálico.
       while(altura > decagono1.faces[face].arestas[2].vertices[1].getY()){
@@ -192,15 +187,11 @@ public class TelaRotacaoQuaternio {
         altura-=0.9;
       }
       
-      if (face == 0)
-        x1 = decagono1.faces[face].arestas[6].vertices[1].getX()+16;
-      else
-        x1 = decagono1.faces[face].arestas[6].vertices[1].getX()+18;
-        
-      x2 = decagono1.faces[face].arestas[7].vertices[1].getX()+5;
+      x1 = decagono1.vertices[5].getX()+20;
+      x2 = decagono1.vertices[6].getX()-20;
       altura = decagono1.faces[face].arestas[7].vertices[1].getY();
-      taxaX1 = -1.1;
-      taxaX2 = -0.2;
+      taxaX1 = -0.625;
+      taxaX2 = 0.625;
       
       //Região formada pelos vértices 5, 6, 7 e 8, que forma um trapézio invertido.
       while(altura > decagono1.faces[face].arestas[4].vertices[1].getY()){
@@ -210,18 +201,12 @@ public class TelaRotacaoQuaternio {
         altura-=0.9;
       }
       
-      if (face==0){
-        x1 = decagono1.faces[face].arestas[6].vertices[1].getX()+12;
-        x2 = decagono1.faces[face].arestas[7].vertices[1].getX()+5;
-      }
-      else{
-        x1 = decagono1.faces[face].arestas[6].vertices[1].getX()+18;
-        x2 = decagono1.faces[face].arestas[7].vertices[1].getX()+6;
-      }
+      x1 = decagono1.vertices[7].getX();
+      x2 = decagono1.vertices[8].getX();
       
       altura = decagono1.faces[face].arestas[6].vertices[1].getY();
-      taxaX1 = 2.7;
-      taxaX2 = -1;
+      taxaX1 = 3.2;
+      taxaX2 = -3.2;
       
       //Região formada pelos vértices 7, 8 e 9, que forma um triângulo invertido.
       while(x1 < x2){
@@ -231,7 +216,7 @@ public class TelaRotacaoQuaternio {
         altura+=0.9;
       }
     } //fim do if face=0 ou face=1
-    else {
+    /*else {
       // Faces laterais
       float z1, z2, y1, y2, taxaY1, taxaY2, taxaZ1, taxaZ2;
       taxaX1 = taxaX2 = taxaY1 = taxaY2 = 1; // inicializando varíaveis
@@ -335,7 +320,7 @@ public class TelaRotacaoQuaternio {
         z1 += taxaZ1;
         z2 += taxaZ2;
       }
-    }
+    }*/
   }
   
   void flatShading(Decagono3D decagono) {
@@ -365,7 +350,7 @@ public class TelaRotacaoQuaternio {
     Vertice pontaDoDecagono = new Vertice((this.pontoB.getX() + this.pontoA.getX())/2, (this.pontoB.getY() + this.pontoA.getY())/2, (this.pontoB.getZ() + this.pontoA.getZ())/2);
 
     Decagono3D decagono = new Decagono3D(pontaDoDecagono);
-    Decagono3D decagono2 = new Decagono3D(new Vertice(1000, 700, 0));
+    Decagono3D decagono2 = new Decagono3D(new Vertice(1000, 700, 0), true);
 
     stroke(163, 16, 163);
 
