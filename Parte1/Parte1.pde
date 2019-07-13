@@ -15,7 +15,7 @@ String ZpontoA="";
 float XpontoB, YpontoB;
 String ZpontoB="";
 String anguloTeta="";
-boolean firstLoop = true;
+boolean isRotacionando = true;
 
 double teta, anguloAnimado, incrementoAnimacao;
 
@@ -86,12 +86,7 @@ void draw() {
             }
             break;
           default:
-            
-            clear();//Limpa a tela antes de desenhar
-            background(255,255,255); //cor de fundo
-            
-            TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, anguloAnimado, firstLoop);
-            telaRotacaoQuaternio.drawTela();
+            TelaRotacaoQuaternio telaRotacaoQuaternio = new TelaRotacaoQuaternio(verticeA, verticeB, anguloAnimado, isRotacionando);
             
             if (Math.abs(anguloAnimado + incrementoAnimacao) < Math.abs(teta)) {
               anguloAnimado += incrementoAnimacao;
@@ -100,8 +95,12 @@ void draw() {
             }
             else {
               anguloAnimado = teta;
-              this.firstLoop = false; // previne lotar o terminal com prints
+              this.isRotacionando = false; // variável de controle
             }
+            
+            clear();//Limpa a tela antes de desenhar
+            background(255,255,255); //cor de fundo
+            telaRotacaoQuaternio.drawTela();
         }
       }
       break;

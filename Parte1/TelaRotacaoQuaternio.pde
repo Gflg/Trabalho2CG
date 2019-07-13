@@ -4,20 +4,28 @@ public class TelaRotacaoQuaternio {
 
   double n[], teta;
   
-  boolean firstLoop;
+  boolean isRotacionando;
 
-  public TelaRotacaoQuaternio(Vertice pontoA, Vertice pontoB, double teta, boolean firstLoop) {
+  public TelaRotacaoQuaternio(Vertice pontoA, Vertice pontoB, double teta, boolean isRotacionando) {
     this.pontoA = pontoA;
     this.pontoB = pontoB;
-    this.n = this.normalizaVetorEntreOsPontos();
+    this.n = this.calcularEixoRotacao();
     this.teta = teta;
-    this.firstLoop = firstLoop;
+    this.isRotacionando = isRotacionando;
   }
   
-  double[] normalizaVetorEntreOsPontos() {
-    double vetorEntreOsPontos[] = {this.pontoB.getX() - this.pontoA.getX(), this.pontoB.getY() - this.pontoA.getY(), this.pontoB.getZ() - this.pontoA.getZ()};
-    double moduloDoVetor = this.moduloVetor(vetorEntreOsPontos);
-    return this.multiplicaVetorPorEscalar(vetorEntreOsPontos, 1/moduloDoVetor);
+  double[] calcularEixoRotacao() {
+    return this.normalizaVetor(this.calculaVetorEntre2Pontos(this.pontoA, this.pontoB));
+  }
+  
+  double[] calculaVetorEntre2Pontos(Vertice pontoA, Vertice pontoB) {
+    double vetorEntreOsPontos[] = {pontoB.getX() - pontoA.getX(), pontoB.getY() - pontoA.getY(), pontoB.getZ() - pontoA.getZ()};
+    return vetorEntreOsPontos;
+  }
+  
+  double[] normalizaVetor(double vetor[]) {
+    double moduloDoVetor = this.moduloVetor(vetor);
+    return this.multiplicaVetorPorEscalar(vetor, 1/moduloDoVetor);
   }
 
   double seno(double angulo){
@@ -113,6 +121,10 @@ public class TelaRotacaoQuaternio {
     ponto.setY((float) vetorPontoRotacionado[1]);
     ponto.setZ((float) vetorPontoRotacionado[2]);
   }
+  
+  void flatShading() {
+    
+  }
 
   public void drawTela() {
 
@@ -129,7 +141,7 @@ public class TelaRotacaoQuaternio {
     stroke(163, 16, 163);
 
     for (int i = 0; i < decagono.vertices.length; i++){
-      if (this.firstLoop) {
+      if (this.isRotacionando) {
         System.out.println("--- Coordenadas do Ponto ANTES da ROTAÇÃO ---");
         System.out.println(decagono.vertices[i].getX());
         System.out.println(decagono.vertices[i].getY());
@@ -138,12 +150,16 @@ public class TelaRotacaoQuaternio {
 
       rotacionarPorQuaternio(decagono.vertices[i], n, teta);
 
-      if (this.firstLoop) {
+      if (this.isRotacionando) {
         System.out.println("--- Coordenadas do Ponto APÓS a ROTAÇÃO ---");
         System.out.println(decagono.vertices[i].getX());
         System.out.println(decagono.vertices[i].getY());
         System.out.println(decagono.vertices[i].getZ());
       }
+    }
+    
+    if (!this.isRotacionando) {
+      this.flatShading();
     }
     
     decagono.drawFigura();
