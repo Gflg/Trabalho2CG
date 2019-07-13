@@ -2,7 +2,7 @@ public class TelaRotacaoQuaternio {
   
   Vertice pontoA, pontoB;
 
-  double n[], teta;
+  double n[], teta, pontoLuz[] = {500,500,1000000};
   
   boolean isRotacionando;
 
@@ -96,7 +96,21 @@ public class TelaRotacaoQuaternio {
     double resultadoFinal[] = somaVetores(somaUmMaisDois, somaTresMaisQuatro);
     return resultadoFinal;
   }
-
+  
+  double[] normalFace(Decagono3D dec, int face){
+    double[] normal = {1,1,1};
+    double[] atual = new double[3];
+    for(int i=1; i< dec.faces[face].getQtdVertices(); i++){
+      atual[0] = dec.vertices[i].getX() - dec.vertices[0].getX();
+      atual[1] = dec.vertices[i].getY() - dec.vertices[0].getY();
+      atual[2] = dec.vertices[i].getZ() - dec.vertices[0].getZ();
+      normal[0] = normal[0] * atual[0];
+      normal[1] = normal[1] * atual[1];
+      normal[2] = normal[2] * atual[2];
+    }
+    return normal;
+  }
+  
   void rotacionarPorQuaternio(Vertice ponto, double n[], double teta) {
 
     //Vetor r do ponto original
@@ -122,8 +136,222 @@ public class TelaRotacaoQuaternio {
     ponto.setZ((float) vetorPontoRotacionado[2]);
   }
   
-  void flatShading() {
-    
+  public void pintaFaceDecagono(Decagono3D decagono1, int face){
+    float taxaX1, taxaX2, x1, x2, altura;
+    // Faces frente e trás
+    if(face == 0 || face == 1){
+      taxaX1 = 0.2;
+      taxaX2 = -1.4;
+      x1 = decagono1.faces[face].arestas[0].vertices[0].getX()-6.5; //Esse -6.5 representa o ponto inicial no eixo x logo depois da aresta desenhada. 
+      x2 = decagono1.faces[face].arestas[1].vertices[1].getX()-5.5; //Esse -5.5 representa o ponto inicial no eixo x logo depois da aresta desenhada.
+      altura = decagono1.faces[face].arestas[1].vertices[1].getY();
+      
+      while(x1 < x2){
+        line(x1, altura, decagono1.faces[face].arestas[0].vertices[0].getZ(), x2, altura, decagono1.faces[face].arestas[0].vertices[0].getZ());
+        //o x inicial de cada vértice é variado por uma taxa para que consigam tudo o que está dentro das arestas dessa região
+        x1+=taxaX1;
+        x2+=taxaX2;
+        //o y é sempre variado em 0.9, onde só precisei variar as taxas no eixo x
+        altura-=0.9;
+      }
+      
+      if (face == 0)
+        x1 = decagono1.faces[face].arestas[2].vertices[1].getX()+13;
+      else
+        x1 = decagono1.faces[face].arestas[2].vertices[1].getX()+15;
+        
+      x2 = decagono1.faces[face].arestas[3].vertices[1].getX()-6;
+      altura = decagono1.faces[face].arestas[3].vertices[1].getY();
+      taxaX1 = -0.1;
+      taxaX2 = -1;
+      
+      //Região formada pelos vértices 1, 2, 3 e 4, que forma um trapézio.
+      //Aqui o ponto de parada é a altura porque as coordenadas x das arestas esquerda e direita nunca vão se encontrar nessa região.
+      while(altura >= decagono1.faces[face].arestas[0].vertices[1].getY()){
+        line(x1, altura, decagono1.faces[face].arestas[0].vertices[0].getZ(), x2, altura, decagono1.faces[face].arestas[0].vertices[0].getZ());
+        x1+=taxaX1;
+        x2+=taxaX2;
+        altura-=0.9;
+      }
+      
+      if (face == 0)
+        x1 = decagono1.faces[face].arestas[4].vertices[1].getX()+17;
+      else
+        x1 = decagono1.faces[face].arestas[4].vertices[1].getX()+19;
+        
+      x2 = decagono1.faces[face].arestas[5].vertices[1].getX()-2.5;
+      altura = decagono1.faces[face].arestas[5].vertices[1].getY(); 
+      taxaX1 = -0.6;
+      taxaX2 = -0.6;
+      
+      //Região formada pelos vértices 3, 4, 5 e 6, que forma um quadrilátero que possui as variações iguais no eixo x, como se fosse um retângulo em itálico.
+      while(altura > decagono1.faces[face].arestas[2].vertices[1].getY()){
+        line(x1, altura, decagono1.faces[face].arestas[0].vertices[0].getZ(), x2, altura, decagono1.faces[face].arestas[0].vertices[0].getZ());
+        x1+=taxaX1;
+        x2+=taxaX2;
+        altura-=0.9;
+      }
+      
+      if (face == 0)
+        x1 = decagono1.faces[face].arestas[6].vertices[1].getX()+16;
+      else
+        x1 = decagono1.faces[face].arestas[6].vertices[1].getX()+18;
+        
+      x2 = decagono1.faces[face].arestas[7].vertices[1].getX()+5;
+      altura = decagono1.faces[face].arestas[7].vertices[1].getY();
+      taxaX1 = -1.1;
+      taxaX2 = -0.2;
+      
+      //Região formada pelos vértices 5, 6, 7 e 8, que forma um trapézio invertido.
+      while(altura > decagono1.faces[face].arestas[4].vertices[1].getY()){
+        line(x1, altura, decagono1.faces[face].arestas[0].vertices[0].getZ(), x2, altura, decagono1.faces[face].arestas[0].vertices[0].getZ());
+        x1+=taxaX1;
+        x2+=taxaX2;
+        altura-=0.9;
+      }
+      
+      if (face==0){
+        x1 = decagono1.faces[face].arestas[6].vertices[1].getX()+12;
+        x2 = decagono1.faces[face].arestas[7].vertices[1].getX()+5;
+      }
+      else{
+        x1 = decagono1.faces[face].arestas[6].vertices[1].getX()+18;
+        x2 = decagono1.faces[face].arestas[7].vertices[1].getX()+6;
+      }
+      
+      altura = decagono1.faces[face].arestas[6].vertices[1].getY();
+      taxaX1 = 2.7;
+      taxaX2 = -1;
+      
+      //Região formada pelos vértices 7, 8 e 9, que forma um triângulo invertido.
+      while(x1 < x2){
+        line(x1, altura, decagono1.faces[face].arestas[0].vertices[0].getZ(), x2, altura, decagono1.faces[face].arestas[0].vertices[0].getZ());
+        x1+=taxaX1;
+        x2+=taxaX2;
+        altura+=0.9;
+      }
+    } //fim do if face=0 ou face=1
+    else {
+      // Faces laterais
+      float z1, z2, y1, y2, taxaY1, taxaY2, taxaZ1, taxaZ2;
+      taxaX1 = taxaX2 = taxaY1 = taxaY2 = 1; // inicializando varíaveis
+      taxaZ1 = taxaZ2 = 0; // inicializando varíaveis
+      switch (face) {
+        case 2: 
+          taxaX1 = -0.25;
+          taxaX2 = -0.25;
+          taxaY1 = 0.65;
+          taxaY2 = 0.65;
+          break;
+        case 3: 
+          taxaX1 = 0.15;
+          taxaX2 = 0.15;
+          taxaY1 = 0.9;
+          taxaY2 = 0.9;
+          break;
+        case 4: 
+          taxaX1 = 0.23;
+          taxaX2 = 0.23;
+          taxaY1 = 0.35;
+          taxaY2 = 0.35;
+          break;
+        case 5: 
+          taxaX1 = 0.32;
+          taxaX2 = 0.32;
+          taxaY1 = 0.4;
+          taxaY2 = 0.4;
+          taxaZ1 = 0.27;
+          taxaZ2 = 0.4;
+          break;
+        case 6:         
+          taxaX1 = 0.4;
+          taxaX2 = 0.5;
+          taxaY1 = 0.2;
+          taxaY2 = 0.2;
+          taxaZ1 = 0.8;
+          taxaZ2 = 0.5;
+          break;
+        case 7:
+          taxaX1 = 0.75;
+          taxaX2 = 0.7;
+          taxaY1 = 0.5;
+          taxaY2 = 0.5;
+          break;
+        case 8:
+          taxaX1 = 0.85;
+          taxaX2 = 0.85;
+          taxaY1 = 0.8;
+          taxaY2 = 0.8;
+          break;
+        case 9:
+          taxaX1 = 0.23;
+          taxaX2 = 0.23;
+          taxaY1 = 0.35;
+          taxaY2 = 0.35;
+          break;
+        case 10:
+          taxaX1 = 0.1;
+          taxaX2 = 0.1;
+          taxaY1 = 0.35;
+          taxaY2 = 0.35;
+          break;
+        case 11:
+        // como eu, humano, vou escolher os paramêtros para pintar algo que não vejo?
+          //stroke(0,0,0);
+          //taxaX1 = 0.23;
+          //taxaX2 = 0.23;
+          //taxaY1 = 0.35;
+          //taxaY2 = 0.35;
+          //break;
+        default:
+          return;
+      }
+      x1 = decagono1.faces[face].arestas[0].vertices[0].getX();
+      y1 = decagono1.faces[face].arestas[0].vertices[0].getY() + 1;
+      z1 = decagono1.faces[face].arestas[0].vertices[0].getZ();
+      x2 = decagono1.faces[face].arestas[0].vertices[1].getX();
+      y2 = decagono1.faces[face].arestas[0].vertices[1].getY() + 1;
+      z2 = decagono1.faces[face].arestas[0].vertices[1].getZ();
+      float limiteY1 = decagono1.faces[face].arestas[2].vertices[0].getY() - taxaY1;
+      float limiteY2 = decagono1.faces[face].arestas[2].vertices[1].getY() - taxaY2;
+      if (face == 5) { 
+        x1 += 3.5;
+        x2 -= 1;
+      } else if (face == 6) {
+        x1 += 2.5;
+        y1 -= 3;
+        y2 -= 0.5;
+        limiteY1 -= 0.5;
+        limiteY2 -= 0.5;
+      }
+      while((y1 < limiteY1) && (y2 < limiteY2)) {
+        line(x1, y1, z1, x2, y2, z2);
+        x1 += taxaX1;
+        x2 += taxaX2;
+        if(y1 < decagono1.faces[face].arestas[2].vertices[0].getY() - taxaY1)
+          y1 += taxaY1;
+        if(y2 < decagono1.faces[face].arestas[2].vertices[1].getY())
+          y2 += taxaY2;
+        z1 += taxaZ1;
+        z2 += taxaZ2;
+      }
+    }
+  }
+  
+  void flatShading(Decagono3D decagono) {
+    double[] intensidadeAmbiente = {50, 250, 150}, intensidadeDifusa = {50, 250, 150};
+    double coeficienteAmbiente = 1.0, coeficienteDifusa = 1.5;
+    double[] resposta = {0, 0, 0};
+    for(int i=0; i<12;i++){
+      for(int j=0; j<3;j++){
+        intensidadeAmbiente[j] *= coeficienteAmbiente;
+        intensidadeDifusa[j] *= coeficienteDifusa * cos((float) anguloEntreVetores(normalFace(decagono, i), pontoLuz)); //cosseno é encontrado com a função de encontrar ângulo passando a normal da face e o ponto de luz
+        resposta[j] = intensidadeAmbiente[j] + intensidadeDifusa[j];
+      }
+      stroke(Math.round(resposta[0]), Math.round(resposta[1]), Math.round(resposta[2]));
+      pintaFaceDecagono(decagono, i);
+    }
+    stroke(0,0,0);
   }
 
   public void drawTela() {
@@ -137,6 +365,7 @@ public class TelaRotacaoQuaternio {
     Vertice pontaDoDecagono = new Vertice((this.pontoB.getX() + this.pontoA.getX())/2, (this.pontoB.getY() + this.pontoA.getY())/2, (this.pontoB.getZ() + this.pontoA.getZ())/2);
 
     Decagono3D decagono = new Decagono3D(pontaDoDecagono);
+    Decagono3D decagono2 = new Decagono3D(new Vertice(1000, 700, 0));
 
     stroke(163, 16, 163);
 
@@ -159,7 +388,8 @@ public class TelaRotacaoQuaternio {
     }
     
     if (!this.isRotacionando) {
-      this.flatShading();
+      this.flatShading(decagono2);
+      decagono2.drawFigura();
     }
     
     decagono.drawFigura();

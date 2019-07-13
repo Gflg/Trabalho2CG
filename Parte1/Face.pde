@@ -1,9 +1,15 @@
 public class Face {
   
   public Aresta[] arestas;
+  private int qtdArestas;
   
   public Face(int qtdArestas) {
-    this.arestas = new Aresta[qtdArestas];    
+    this.arestas = new Aresta[qtdArestas];  
+    this.qtdArestas = qtdArestas;
+  }
+  
+  public int getQtdVertices(){
+    return qtdArestas;//qtdArestas é igual a qtdVertices. Olhar em Decagono3D.
   }
   
   public Face(Aresta... arestas) {
