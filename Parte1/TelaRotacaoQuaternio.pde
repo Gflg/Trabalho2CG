@@ -2,7 +2,7 @@ public class TelaRotacaoQuaternio {
   
   Vertice pontoA, pontoB;
 
-  double n[], teta, pontoLuz[] = {1700,900,1000000};
+  double n[], teta, pontoLuz[] = {1700,900,Double.MAX_VALUE};
   
   boolean isRotacionando;
 
@@ -323,7 +323,7 @@ public class TelaRotacaoQuaternio {
   
   void flatShading(Decagono3D decagono) {
     double[] intensidadeAmbiente = {50, 250, 150}, intensidadeDifusa = {50, 250, 150};
-    double coeficienteAmbiente = 1.0, coeficienteDifusa = 1.5;
+    double coeficienteAmbiente = 1.0, coeficienteDifusa = 1.55;
     double[] resposta = {0, 0, 0};
     for(int i=0; i<12;i++){
       for(int j=0; j<3;j++){
