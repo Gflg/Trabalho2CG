@@ -2,7 +2,7 @@ public class TelaRotacaoQuaternio {
   
   Vertice pontoA, pontoB;
 
-  double n[], teta, pontoLuz[] = {500,500,1000000};
+  double n[], teta, pontoLuz[] = {1700,900,1000000};
   
   boolean isRotacionando;
 
@@ -216,78 +216,76 @@ public class TelaRotacaoQuaternio {
         altura+=0.9;
       }
     } //fim do if face=0 ou face=1
-    /*else {
+    else {
       // Faces laterais
       float z1, z2, y1, y2, taxaY1, taxaY2, taxaZ1, taxaZ2;
       taxaX1 = taxaX2 = taxaY1 = taxaY2 = 1; // inicializando varíaveis
       taxaZ1 = taxaZ2 = 0; // inicializando varíaveis
       switch (face) {
         case 2: 
-          taxaX1 = -0.25;
-          taxaX2 = -0.25;
-          taxaY1 = 0.65;
-          taxaY2 = 0.65;
+          taxaX1 = -0.48;
+          taxaX2 = -0.48;
+          taxaY1 = 0.35;
+          taxaY2 = 0.35;
           break;
         case 3: 
-          taxaX1 = 0.15;
-          taxaX2 = 0.15;
-          taxaY1 = 0.9;
-          taxaY2 = 0.9;
+          taxaX1 = -0.24;
+          taxaX2 = -0.24;
+          taxaY1 = 0.35;
+          taxaY2 = 0.35;
           break;
         case 4: 
-          taxaX1 = 0.23;
-          taxaX2 = 0.23;
-          taxaY1 = 0.35;
-          taxaY2 = 0.35;
-          break;
-        case 5: 
-          taxaX1 = 0.32;
-          taxaX2 = 0.32;
+          taxaX1 = 0.01;
+          taxaX2 = 0.01;
           taxaY1 = 0.4;
           taxaY2 = 0.4;
-          taxaZ1 = 0.27;
-          taxaZ2 = 0.4;
           break;
-        case 6:         
-          taxaX1 = 0.4;
-          taxaX2 = 0.5;
+        case 5: 
+          taxaX1 = 0.14;
+          taxaX2 = 0.14;
           taxaY1 = 0.2;
           taxaY2 = 0.2;
-          taxaZ1 = 0.8;
-          taxaZ2 = 0.5;
           break;
+         //case 6:         
+         // taxaX1 = 0.5;
+         // taxaX2 = 0.5;
+         // taxaY1 = 0.2;
+         // taxaY2 = 0.2;
+         // taxaZ1 = 0.5;
+         // taxaZ2 = 0.3;
+         // break;
         case 7:
-          taxaX1 = 0.75;
-          taxaX2 = 0.7;
-          taxaY1 = 0.5;
-          taxaY2 = 0.5;
+          taxaX1 = 0.48;
+          taxaX2 = 0.48;
+          taxaY1 = 0.35;
+          taxaY2 = 0.35;
           break;
         case 8:
-          taxaX1 = 0.85;
-          taxaX2 = 0.85;
-          taxaY1 = 0.8;
-          taxaY2 = 0.8;
+          taxaX1 = 0.24;
+          taxaX2 = 0.24;
+          taxaY1 = 0.35;
+          taxaY2 = 0.35;
           break;
         case 9:
-          taxaX1 = 0.23;
-          taxaX2 = 0.23;
-          taxaY1 = 0.35;
-          taxaY2 = 0.35;
+          taxaX1 = 0.01;
+          taxaX2 = 0.01;
+          taxaY1 = 0.4;
+          taxaY2 = 0.4;
           break;
         case 10:
-          taxaX1 = 0.1;
-          taxaX2 = 0.1;
-          taxaY1 = 0.35;
-          taxaY2 = 0.35;
+          taxaX1 = -0.14;
+          taxaX2 = -0.14;
+          taxaY1 = 0.2;
+          taxaY2 = 0.2;
           break;
-        case 11:
-        // como eu, humano, vou escolher os paramêtros para pintar algo que não vejo?
-          //stroke(0,0,0);
-          //taxaX1 = 0.23;
-          //taxaX2 = 0.23;
-          //taxaY1 = 0.35;
-          //taxaY2 = 0.35;
-          //break;
+        //case 11:         
+        //  taxaX1 = -0.5;
+        //  taxaX2 = -0.5;
+        //  taxaY1 = 0.2;
+        //  taxaY2 = 0.2;
+        //  taxaZ1 = -0.5;
+        //  taxaZ2 = -0.3;
+        //  break;
         default:
           return;
       }
@@ -320,7 +318,7 @@ public class TelaRotacaoQuaternio {
         z1 += taxaZ1;
         z2 += taxaZ2;
       }
-    }*/
+    }
   }
   
   void flatShading(Decagono3D decagono) {
