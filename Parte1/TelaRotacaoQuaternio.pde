@@ -2,7 +2,7 @@ public class TelaRotacaoQuaternio {
   
   Vertice pontoA, pontoB;
 
-  double n[], teta, pontoLuz[] = {1700,900,Double.MAX_VALUE};
+  double n[], teta, pontoLuz[] = {width/2,height/2,Double.MAX_VALUE};
   
   boolean isRotacionando;
 
@@ -100,14 +100,61 @@ public class TelaRotacaoQuaternio {
   double[] normalFace(Decagono3D dec, int face){
     double[] normal = {1,1,1};
     double[] atual = new double[3];
-    for(int i=1; i< dec.faces[face].getQtdVertices(); i++){
-      atual[0] = dec.vertices[i].getX() - dec.vertices[0].getX();
-      atual[1] = dec.vertices[i].getY() - dec.vertices[0].getY();
-      atual[2] = dec.vertices[i].getZ() - dec.vertices[0].getZ();
-      normal[0] = normal[0] * atual[0];
-      normal[1] = normal[1] * atual[1];
-      normal[2] = normal[2] * atual[2];
+    if(face == 0 || face == 1){
+      for(int i=(face*10)+1; i< 10+(face*10); i++){
+        atual[0] = dec.vertices[i].getX() - dec.vertices[face*10].getX();
+        atual[1] = dec.vertices[i].getY() - dec.vertices[face*10].getY();
+        atual[2] = dec.vertices[i].getZ() - dec.vertices[face*10].getZ();
+        normal[0] = normal[0] * atual[0];
+        normal[1] = normal[1] * atual[1];
+        normal[2] = normal[2] * atual[2];
+      }
     }
+    else{
+      int inicio, contador, contadorAtual=0;
+      if (face == 2 || face == 7)
+        inicio = 0;
+      else if (face == 3)
+        inicio = 1;
+      else if (face == 4)
+        inicio = 3;
+      else if (face == 5)
+        inicio = 5;
+      else if (face == 6)
+        inicio = 7;
+      else if (face == 8)
+        inicio = 2;
+      else if (face == 9)
+        inicio = 4;
+      else if (face == 10)
+        inicio = 6;
+      else
+        inicio = 8;
+      
+      if(face == 2 || face == 11)
+        contador = inicio + 1;
+      else
+        contador = inicio + 2;
+      
+      while(contadorAtual < 3){
+        atual[0] = dec.vertices[contador].getX() - dec.vertices[inicio].getX();
+        atual[1] = dec.vertices[contador].getY() - dec.vertices[inicio].getY();
+        atual[2] = dec.vertices[contador].getZ() - dec.vertices[inicio].getZ();
+        normal[0] = normal[0] * atual[0];
+        normal[1] = normal[1] * atual[1];
+        normal[2] = normal[2] * atual[2];
+        if(contadorAtual == 0)
+          contador = inicio+10;
+        else if(face == 2 || face == 11)
+          contador += 1;
+        else
+          contador += 2;
+        contadorAtual++;
+      }
+    }
+    /*print("Normal da face " + face + "\n");
+    for(int k=0; k<3; k++)
+      print("Normal da posição " + k + " = " + normal[k] + "\n");*/
     return normal;
   }
   
@@ -321,17 +368,41 @@ public class TelaRotacaoQuaternio {
     }
   }
   
+  double distancia(Decagono3D decagono, Vertice v){
+    double resposta=0;
+    
+    resposta += v.getX() - decagono.vertices[10].getX();
+    resposta += v.getY() - decagono.vertices[10].getY();
+    resposta += v.getZ() - decagono.vertices[10].getZ();
+    
+    if(resposta==0)
+      return 1;
+    else
+      return Math.abs(resposta);
+  }
+  
   void flatShading(Decagono3D decagono) {
-    double[] intensidadeAmbiente = {50, 250, 150}, intensidadeDifusa = {50, 250, 150};
-    double coeficienteAmbiente = 1.0, coeficienteDifusa = 1.55;
+    double[] intensidadeAmbiente = new double[3], intensidadeDifusa = new double[3];
+    double coeficienteAmbiente = 1.0, coeficienteDifusa = 0.2;
     double[] resposta = {0, 0, 0};
     for(int i=0; i<12;i++){
+      intensidadeAmbiente[0] = 50;
+      intensidadeAmbiente[1] = 250;
+      intensidadeAmbiente[2] = 150;
+      intensidadeDifusa[0] = 50;
+      intensidadeDifusa[1] = 250;
+      intensidadeDifusa[2] = 150;
       for(int j=0; j<3;j++){
         intensidadeAmbiente[j] *= coeficienteAmbiente;
-        intensidadeDifusa[j] *= coeficienteDifusa * cos((float) anguloEntreVetores(normalFace(decagono, i), pontoLuz)); //cosseno é encontrado com a função de encontrar ângulo passando a normal da face e o ponto de luz
+        print("Face " + i + "\n");
+        print("Angulo: " + anguloEntreVetores(normalFace(decagono, i), pontoLuz));
+        intensidadeDifusa[j] *= coeficienteDifusa * cosseno(anguloEntreVetores(normalFace(decagono, i), pontoLuz)); //cosseno é encontrado com a função de encontrar ângulo passando a normal da face e o ponto de luz
+        intensidadeDifusa[j] /= Math.pow(distancia(decagono, decagono.faces[i].arestas[0].vertices[0]), 2);
         resposta[j] = intensidadeAmbiente[j] + intensidadeDifusa[j];
       }
       stroke(Math.round(resposta[0]), Math.round(resposta[1]), Math.round(resposta[2]));
+      //print("Face " + i + "\n");
+      //print("Red: " + Math.round(resposta[0]) + ", Green: " + Math.round(resposta[1]) + ", Blue: " + Math.round(resposta[2]) + "\n");
       pintaFaceDecagono(decagono, i);
     }
     stroke(0,0,0);
