@@ -2,7 +2,8 @@ public class TelaRotacaoQuaternio {
   
   Vertice pontoA, pontoB;
 
-  double n[], teta, pontoLuz[] = {width/2,height/2,Double.MAX_VALUE};
+  double n[], teta, pontoLuz[] = {10000,10000,10000}; //Double.MAX_VALUE, 0, 10000  |   0,Double.MAX_VALUE,10000    | 0,0,0   | 10000,10000,10000
+  //Por algum motivo, ele não pinta direito quando coloca o z no MAX_VALUE, pintando de preto a face da frente
   
   boolean isRotacionando;
 
@@ -105,9 +106,10 @@ public class TelaRotacaoQuaternio {
         atual[0] = dec.vertices[i].getX() - dec.vertices[face*10].getX();
         atual[1] = dec.vertices[i].getY() - dec.vertices[face*10].getY();
         atual[2] = dec.vertices[i].getZ() - dec.vertices[face*10].getZ();
-        normal[0] = normal[0] * atual[0];
+        /*normal[0] = normal[0] * atual[0];
         normal[1] = normal[1] * atual[1];
-        normal[2] = normal[2] * atual[2];
+        normal[2] = normal[2] * atual[2];*/
+        normal = produtoVetorial(normal, atual);
       }
     }
     else{
@@ -140,9 +142,7 @@ public class TelaRotacaoQuaternio {
         atual[0] = dec.vertices[contador].getX() - dec.vertices[inicio].getX();
         atual[1] = dec.vertices[contador].getY() - dec.vertices[inicio].getY();
         atual[2] = dec.vertices[contador].getZ() - dec.vertices[inicio].getZ();
-        normal[0] = normal[0] * atual[0];
-        normal[1] = normal[1] * atual[1];
-        normal[2] = normal[2] * atual[2];
+        normal = produtoVetorial(normal, atual);
         if(contadorAtual == 0)
           contador = inicio+10;
         else if(face == 2 || face == 11)
@@ -152,9 +152,9 @@ public class TelaRotacaoQuaternio {
         contadorAtual++;
       }
     }
-    /*print("Normal da face " + face + "\n");
+    print("Normal da face " + face + "\n");
     for(int k=0; k<3; k++)
-      print("Normal da posição " + k + " = " + normal[k] + "\n");*/
+      print("Normal da posição " + k + " = " + normal[k] + "\n");
     return normal;
   }
   
