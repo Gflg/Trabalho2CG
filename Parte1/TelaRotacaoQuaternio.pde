@@ -69,7 +69,7 @@ public class TelaRotacaoQuaternio {
     for (int i = 0; i < vetor1.length; i++) {
         acumulador += vetor1[i] * vetor2[i];
     }
-    return Math.toDegrees(Math.acos(acumulador / (moduloVetor(vetor1) * moduloVetor(vetor2))));
+    return Math.acos(acumulador / (moduloVetor(vetor1) * moduloVetor(vetor2)));
   }
 
   double produtoInterno(double vetor1[], double vetor2[]){
