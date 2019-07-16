@@ -39,7 +39,7 @@ void draw() {
   switch (entradaUsuario) {
     case 0:
       fill(0);
-      text ("Clique na tela para definir o Ponto A (do eixo de rotação)", 133, 100);
+      text ("Clique na tela para definir o Ponto A (do eixo de rotação):", 133, 100);
       break;
     case 1:
       fill(0);
@@ -47,7 +47,7 @@ void draw() {
       break;
     case 2:
       fill(0);
-      text ("Clique na tela para definir o Ponto B (do eixo de rotação) e aperte enter para continuar: ", 133, 300);
+      text ("Clique na tela para definir o Ponto B (do eixo de rotação): ", 133, 300);
       break;
     case 3:
       fill(0);
